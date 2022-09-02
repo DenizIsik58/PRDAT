@@ -28,29 +28,6 @@ type expr =
   | Prim of string * expr * expr
   | If of expr * expr * expr;;
 
-type aexpr = 
-  | CstI of int
-  | Var of string
-  | Add of expr * expr
-  | Mul of expr * expr
-  | Sub of expr * expr
-  
-(*
-
-v - (w + z) is represented as 
-Sub(Var "v", Add(Var "w", Var "z"))
-
-2 ∗ (v − (w + z)) is represented as 
-Mult(CstI 2,(Sub(Var "v"(Add(Var "w", Var "z")))))
-
-x + y + z + v is represented as 
-Add(Var "x", Add(Var "y", Add(Var "z", Var "v")))
-*)
-
-let a1 = Sub(Var "v", Add(Var "w", Var "z"))
-let a2 = Mult(CstI 2,(Sub(Var "v"(Add(Var "w", Var "z")))))
-let a3 = Add(Var "x", Add(Var "y", Add(Var "z", Var "v")))
-
 
 
 let e1 = CstI 17;;
@@ -93,6 +70,30 @@ let rec eval e (env : (string * int) list) : int =
       |"=="  -> if i1 = i2 then 1 else 0
       | _    -> failwith "unknown primitive"
 
+
+type aexpr = 
+  | CstI of int
+  | Var of string
+  | Add of aexpr * aexpr
+  | Mul of aexpr * aexpr
+  | Sub of aexpr * aexpr
+
+(*
+
+v - (w + z) is represented as 
+Sub(Var "v", Add(Var "w", Var "z"))
+
+2 ∗ (v − (w + z)) is represented as 
+Mult(CstI 2,(Sub(Var "v"(Add(Var "w", Var "z")))))
+
+x + y + z + v is represented as 
+Add(Var "x", Add(Var "y", Add(Var "z", Var "v")))
+*)
+
+let a1 = Sub(Var "v", Add(Var "w", Var "z"))
+let a2 = Mul(CstI 2,(Sub(Var "v", Add(Var "w", Var "z"))))
+let a3 = Add(Var "x", Add(Var "y", Add(Var "z", Var "v")))
+
 let rec fmt aexp : string =
   match aexp with
   | CstI x -> sprintf "%d" x
@@ -106,6 +107,9 @@ let e2v1 = eval e2 env;;
 let e2v2 = eval e2 [("a", 314)];;
 let e3v  = eval e3 env;;
 
+(*
+  Our own functions for min, max, equals and If
+*)
 let evalmax = eval eMax env;;
 let evalmin = eval eMin env;;
 let evalEqualFalse = eval eEquals env;;
