@@ -99,7 +99,7 @@ let rec fmt aexp : string =
   | CstI x -> sprintf "%d" x
   | Var x -> sprintf "%s" x
   | Add (e1, e2) -> sprintf "(%s + %s)" (fmt e1) (fmt e2)
-  | Sub (e1, e2) -> sprintf "(%s + %s)" (fmt e1) (fmt e2)
+  | Sub (e1, e2) -> sprintf "(%s - %s)" (fmt e1) (fmt e2)
   | Mul (e1,e2) -> sprintf "(%s * %s)" (fmt e1) (fmt e2)
 
 let e1v  = eval e1 env;;
