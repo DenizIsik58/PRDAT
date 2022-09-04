@@ -102,6 +102,12 @@ let rec fmt aexp : string =
   | Sub (e1, e2) -> sprintf "(%s - %s)" (fmt e1) (fmt e2)
   | Mul (e1,e2) -> sprintf "(%s * %s)" (fmt e1) (fmt e2)
 
+let rec simplify aexpr : aexpr  =
+  match aexpr with
+  | Add (ae1, ae2) when ae1 = CstI (0) -> simplify ae2
+  | Add (ae1, ae2) when ae2 = CstI (0) -> simplify ae1
+  | Sub (ae1, ae2) when ae2 = CstI (0) -> simplify ae1
+
 let e1v  = eval e1 env;;
 let e2v1 = eval e2 env;;
 let e2v2 = eval e2 [("a", 314)];;
