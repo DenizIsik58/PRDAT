@@ -9,6 +9,7 @@ abstract class Expr {
   abstract public int eval(Map<String,Integer> env);
   abstract public String fmt();
   abstract public String fmt2(Map<String,Integer> env);
+  abstract public String toString();
 }
 
 class CstI extends Expr { 
@@ -27,6 +28,11 @@ class CstI extends Expr {
   }
 
   public String fmt2(Map<String,Integer> env) {
+    return ""+i;
+  }
+
+  @Override
+  public String toString(){
     return ""+i;
   }
 }
@@ -48,6 +54,12 @@ class Var extends Expr {
 
   public String fmt2(Map<String,Integer> env) {
     return ""+env.get(name);
+  }
+
+  @Override
+  public String toString() {
+    // TODO Auto-generated method stub
+    return null;
   } 
 
 }
@@ -77,6 +89,12 @@ class Prim extends Expr {
 
   public String fmt2(Map<String,Integer> env) {
     return "(" + e1.fmt2(env) + oper + e2.fmt2(env) + ")";
+  }
+
+  @Override
+  public String toString() {
+    // TODO Auto-generated method stub
+    return null;
   } 
 
 }

@@ -104,9 +104,37 @@ let rec fmt aexp : string =
 
 let rec simplify aexpr : aexpr  =
   match aexpr with
-  | Add (ae1, ae2) when ae1 = CstI (0) -> simplify ae2
-  | Add (ae1, ae2) when ae2 = CstI (0) -> simplify ae1
-  | Sub (ae1, ae2) when ae2 = CstI (0) -> simplify ae1
+  | Add (ae1, ae2) when simplify ae1 = CstI (0) -> simplify ae2
+  | Add (ae1, ae2) when simplify ae2 = CstI (0) -> simplify ae1
+  | Sub (ae1, ae2) when simplify ae2 = CstI (0) -> simplify ae1
+  | Mul (ae1, ae2) when simplify ae1 = CstI (1) -> simplify ae2
+  | Mul (ae1, ae2) when simplify ae2 = CstI (1) -> simplify ae1
+  | Mul (ae1, ae2) when simplify ae1 = CstI (0) -> CstI (0)
+  | Mul (ae1, ae2) when simplify ae2 = CstI (0) -> CstI (0)
+  | Sub (ae1, ae2) when simplify ae1 = simplify ae2 -> CstI (0)
+  | _ -> aexpr
+
+let simplifyAdd1 = Add(CstI (0), CstI (5))
+let simplifyAdd2 = Add (CstI (5), CstI (0))
+
+let simplifySub1 = Sub(CstI(10),CstI(0))
+
+let simplifyMul1 = Mul(CstI(1),CstI(10))
+let simplifyMul2 = Mul(CstI (100), CstI (1))
+let simplifyMul3 = Mul (CstI (0), Add(CstI (0), CstI (5)))
+let simplifyMul4 = Mul (CstI (123123), Sub (CstI (15), CstI (15)))
+let simplifySub2 = Sub(CstI(10), CstI(10))
+
+
+let performDiff aexpr str : aexpr =
+  match axepr with
+    |CstI _ -> CstI 0
+    |Var x when x = str -> CstI 1
+    |Var _ -> CstI 0
+    |Add(ae1, ae2) -> Add((performDiff ae1 str), (performDiff ae2 str))
+    |Sub(ae1, ae2) -> Sub((performDiff ae1 str), (performDiff ae2 str))
+    |Mul(ae1, ae2) -> Add(Mul(performDiff ae1 str, ae2), Mul(ae1, performDiff ae2 str))
+
 
 let e1v  = eval e1 env;;
 let e2v1 = eval e2 env;;
