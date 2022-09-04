@@ -275,8 +275,6 @@ let rec tcomp (e : expr) (cenv : string list) : texpr =
         let cenv' = x :: cenv
         tcomp (Let(variables', ebody)) cenv'
       | [] -> tcomp ebody cenv
-      //let cenv1 = x :: cenv 
-      //TLet(tcomp erhs cenv, tcomp ebody cenv1)
     | Prim(ope, e1, e2) -> TPrim(ope, tcomp e1 cenv, tcomp e2 cenv);;
 
 (* Evaluation of target expressions with variable indexes.  The

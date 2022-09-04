@@ -3,7 +3,6 @@ import java.util.HashMap;
 
 abstract class ArithmeticExpr {
     abstract public ArithmeticExpr simplify();
-    abstract public ArithmeticExpr performDiff(String str);
     abstract public int eval(Map<String, Integer> env);
     abstract public String toString();
 }
@@ -27,11 +26,6 @@ class CstI extends ArithmeticExpr {
 
     public ArithmeticExpr simplify() {
         return this;
-    }
-
-    @Override
-    public ArithmeticExpr performDiff(String str) {
-        return new CstI(0);
     }
 
     @Override
@@ -59,11 +53,6 @@ class Var extends ArithmeticExpr {
     }
 
     @Override
-    public ArithmeticExpr performDiff(String str) {
-        return this.name == str ? new CstI(1) : new CstI(0);
-    }
-
-    @Override
     public String toString() {
         return name;
     }
@@ -85,12 +74,6 @@ class Add extends Binop {
         if (ae1 instanceof CstI && ((CstI) ae1).i == 0) return ae2;
         if (ae2 instanceof CstI && ((CstI) ae2).i == 0) return ae1;
         return this;
-    }
-
-    @Override
-    public ArithmeticExpr performDiff(String str) {
-        
-        return new Add(ae1.performDiff(str), ae2.performDiff(str));
     }
 
     @Override
@@ -118,10 +101,6 @@ class Sub extends Binop {
         return this;
     }
 
-    @Override
-    public ArithmeticExpr performDiff(String str) {
-        return new Add(ae1.performDiff(str), ae2.performDiff(str));
-    }
 
     @Override
     public String toString() {
@@ -152,11 +131,6 @@ class Mul extends Binop {
         }
         
         return this;
-    }
-
-    @Override
-    public ArithmeticExpr performDiff(String str) {
-        return new Add(new Mul(ae1.performDiff(str), ae2), ae2.performDiff(str));
     }
    
     @Override
@@ -263,7 +237,7 @@ class Main {
         //Add
         System.out.println("Add");
         System.out.println(String.format("add1 = %d, actual = %d", 3, add1.eval(env)));
-        System.out.println(String.format("add2 = %d, actual = %d", 10, add2.eval(env)));
+        System.out.println(String.format("add2 = %d, actual = %d", 1, add2.eval(env)));
         System.out.println(String.format("add3 = %d, actual = %d", 1, add2.eval(env)));
         
         //Sub
