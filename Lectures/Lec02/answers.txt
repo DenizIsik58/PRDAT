@@ -1,16 +1,21 @@
 PLC:
-2.4 & 2.5 - Expr.fs 344-367
+2.4 & 2.5 - Lectures/Lec02/Expr.fs 344-367
 
 3.2:
 Regex: (a?b)*(a|b)
-NFA: images/NFA.png
-DFA: images/DFA.png
+NFA: Lectures/Lec02/images/NFA.png
+DFA: Lectures/Lec02/images/DFA.png
 
 BCD:
-2.1 - images/2.1.png
-2.2 - images/2.2.png
+2.1 - Lectures/Lec02/images/2.1.png
+2.2 - Lectures/Lec02/images/2.2.png
 
 
 HelloLex:
 Question 1: [0-9] a single digit
-Question 2: 
+Question 2: a hello.fs file and there are 3 states
+Question 3: Look in fsharp folder for hello.exe (fsharp/hello.exe) and run using command: `mono hello.exe` or fslex?
+Question 4: Look in fsharp folder for hello2.exe (fsharp/hello2.exe) and run using command: `mono hello2.exe` or fslex?
+Question 5: Look in fsharp folder for hello3.exe (fsharp/hello3.exe) and run using command: `mono hello3.exe` or fslex?
+
+
