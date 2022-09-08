@@ -1,0 +1,16 @@
+PLC:
+2.4 & 2.5 - Expr.fs 344-367
+
+3.2:
+Regex: (a?b)*(a|b)
+NFA: images/NFA.png
+DFA: images/DFA.png
+
+BCD:
+2.1 - images/2.1.png
+2.2 - images/2.2.png
+
+
+HelloLex:
+Question 1: [0-9] a single digit
+Question 2: 
