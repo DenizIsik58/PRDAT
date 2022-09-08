@@ -88,7 +88,7 @@ let rec mem x vs =
     | []      -> false
     | v :: vr -> x=v || mem x vr;;
 
-(*
+
 (* Checking whether an expression is closed.  The vs is 
    a list of the bound variables.  *)
 
@@ -105,10 +105,9 @@ let rec closedin (e : expr) (vs : string list) : bool =
 
 let closed1 e = closedin e [];;
 let _ = List.map closed1 [e1;e2;e3;e4;e5;e6;e7;e8;e9;e10]
-*)
 (* ---------------------------------------------------------------------- *)
 
-(* Substitution of expressions for variables 
+(* Substitution of expressions for variables *)
 
 (* This version of lookup returns a Var(x) expression if there is no
    pair (x,e) in the list env --- instead of failing with exception: *)
@@ -198,7 +197,6 @@ let e8s1a = subst e8 [("z", CstI 100)];;
 // Shows renaming of bound variable z (to z3), avoiding capture of free z
 let e9s1a = subst e9 [("y", Var "z")];;
 
-*)
 
 (* ---------------------------------------------------------------------- *)
 
@@ -303,7 +301,7 @@ let tevalTcompE1 = teval (tcomp tcompE1 cenv) [2;1;1] //renv = [b;a;z]
 (* Correctness: eval e []  equals  teval (tcomp e []) [] *)
 
 
-(* ---------------------------------------------------------------------- 
+(* ---------------------------------------------------------------------- *) 
 
 (* Stack machines *)
 
@@ -411,4 +409,3 @@ let intsToFile (inss : int list) (fname : string) =
     System.IO.File.WriteAllText(fname, text);;
 
 (* -----------------------------------------------------------------  *)
-*)

@@ -2,6 +2,9 @@
 
 (* Simple expression language with various evaluators and compilers *)
 
+
+
+
 module Expr
 
 open System.IO
@@ -267,6 +270,8 @@ type sinstr =
   | SMul                                (* pop args, push product *)
   | SPop                                (* pop value/unbind var   *)
   | SSwap                               (* exchange top and next  *)
+
+  
  
 let rec seval (inss : sinstr list) stack = 
     match inss, stack with 
