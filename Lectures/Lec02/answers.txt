@@ -12,8 +12,8 @@ BCD:
     b: ^(?!(0*42)$)[0-9]* 
     c: 0*(?:[4-9][3-9]|(?:[5-9]\d|[1-9]\d{2,}))$
     
-2.2 - a: Lectures/Lec02/images/NFA.png
-      b: Lectures/Lec02/images/DFA.png
+2.2 - a: Lectures/Lec02/images/2.1.png
+      b: Lectures/Lec02/images/2.2.png
 
 
 HelloLex:
