@@ -19,6 +19,7 @@ let keyword s =
     | "let" -> LET
     | "in"  -> IN
     | "end" -> END
+    | "if"  -> IF
     | _     -> NAME s
 }
 
@@ -33,7 +34,9 @@ rule Token = parse
   | '*'             { TIMES }
   | '='             { EQ    } 
   | '('             { LPAR  } 
-  | ')'             { RPAR  } 
+  | ')'             { RPAR  }
+  | ':'             { COLON }
+  | '?'             { QMARK }
   | eof             { EOF   }
   | _               { failwith "Lexer error: illegal symbol" }
   

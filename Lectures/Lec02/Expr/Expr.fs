@@ -161,6 +161,7 @@ type texpr =                            (* target expressions *)
   | TVar of int                         (* index into runtime environment *)
   | TLet of texpr * texpr               (* erhs and ebody                 *)
   | TPrim of string * texpr * texpr
+  | TIf of texpr * texpr * texpr
 
 
 (* Map variable name to variable index at compile-time *)
@@ -319,6 +320,21 @@ let rec scomp e (cenv : rtvalue list) : sinstr list =
 let s1 = scomp e1 []
 let s2 = scomp e2 []
 let s3 = scomp e3 []
+
+let compString str : sinstr list = scomp (Parse.fromString str) []
+
+
+
+(*
+Expr: let x = 3 in x + 2 end
+
+Instr list: [SCstI 3; SVar 0; SCstI 4; SAdd; SSwap; SPop]
+
+cenv: [(Bound x)]
+
+Stack: [7;3;4]
+
+*)
 
 (* Correctness: eval e [] [] equals seval (scomp e []) [] 
    for an expression with no free variables.
