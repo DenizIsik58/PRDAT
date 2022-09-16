@@ -161,7 +161,6 @@ type texpr =                            (* target expressions *)
   | TVar of int                         (* index into runtime environment *)
   | TLet of texpr * texpr               (* erhs and ebody                 *)
   | TPrim of string * texpr * texpr
-  | TIf of texpr * texpr * texpr
 
 
 (* Map variable name to variable index at compile-time *)
