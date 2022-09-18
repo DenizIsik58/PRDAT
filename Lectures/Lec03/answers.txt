@@ -1,0 +1,18 @@
+PLC:
+
+3.3:
+End result: (LET (NAME “z”) EQ (LPAR (CSTINT 17) RPAR)) IN ((NAME “z”) PLUS (CSTINT 2) TIMES (CSTINT 3)) END) EOF
+
+3.4: Check images folder -> "PLC 3_4.png"
+
+3.5: Run command: dotnet fsi -r FsLexYacc.Runtime.dll Absyn.fs ExprPar.fs ExprLex.fs Parse.fs
+
+3.6: Expr.fs line 323
+
+3.7: 
+Absyn.fs line 12
+ExprLex.fsl line 12, 38 & 39
+ExprPar.fsy line 12-14 & 41
+
+
+
