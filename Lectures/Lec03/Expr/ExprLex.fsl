@@ -19,7 +19,6 @@ let keyword s =
     | "let" -> LET
     | "in"  -> IN
     | "end" -> END
-    | "if"  -> IF
     | _     -> NAME s
 }
 

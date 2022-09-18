@@ -9,7 +9,6 @@ type token =
   | LET
   | COLON
   | QMARK
-  | IF
   | PLUS
   | MINUS
   | TIMES
@@ -26,7 +25,6 @@ type tokenId =
     | TOKEN_LET
     | TOKEN_COLON
     | TOKEN_QMARK
-    | TOKEN_IF
     | TOKEN_PLUS
     | TOKEN_MINUS
     | TOKEN_TIMES
