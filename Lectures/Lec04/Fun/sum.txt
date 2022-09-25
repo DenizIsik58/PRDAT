@@ -1,0 +1,4 @@
+1. fromString "let sum n = n in if n = 1 then 1 else n + sum (n - 1) end";;
+2. fromString "let pow n = 8 in (3 * pow (n -1)) end";;
+3. fromString "let powN n = 0 in (powN n +  (3 * (powN n + 1))) end";; 
+4. 
