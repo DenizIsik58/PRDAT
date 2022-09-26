@@ -38,8 +38,7 @@ let e2 = fromString "let f x = x + 7 in f 2 end";;
 
 (* Examples in concrete syntax *)
 
-let ex1 = fromString 
-            @"let f1 x = x + 1 in f1 12 end";;
+let ex1 = fromString @"let f1 x = x + 1 in f1 12 end";;
 
 (* Example: factorial *)
 
@@ -70,3 +69,4 @@ let ex5 = fromString
                  in fib 25 
                  end
               end";;
+
