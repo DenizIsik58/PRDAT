@@ -1,0 +1,55 @@
+PLC:
+
+4.1: 
+    1) run launch.sh to get in interactive mode with all files generated. 
+    2) Type `open ParseAndRun;;`.
+    3) Now you can copy paste in the expressions and run them
+
+4.2:
+
+Check letExpressions.txt file from 1-4
+
+4.3:
+
+Absyn.fs
+
+Changed from:
+Letfun of string * string * expr * expr -> Letfun of string * string list * expr * expr
+Call of expr * expr -> Call of expr * expr list
+
+Letfun now takes a list of strings for it to accept more than 1 argument.
+As we also came across in exercise 4.2 when making example programs, we couldn't apply more than 1 argument.
+In order to do so
+
+Fun.fs
+Line 27: Closure is now given a string list in order to calculate the value of a function that takes more arguments. See line 63-66
+Line 55: Letfun now accepts a list of arguments instead of one single argument that i passes to closure.
+Line 59: Call() also now takes more than 1 argument
+
+4.4:
+
+Fun.fs:
+We have modified the eval function to accomodate functions with multiple arguments
+
+FunPar.fsy:
+We have modified the class to support the modification of syntax described above
+We have added Names and AtExprs
+And modified AtExpr and AppExpr to use AtExprs and Names
+We have also added %type <string list>
+This is to accomodate multiple arguments in funtion calls
+
+4.5:
+FunLex.fsl:
+We have added   
+| "&&"            { AND }
+| "||"            { OR }
+
+to accomodate the && operator and the || operator
+
+
+FunPar.fsy:
+We have added
+| Expr AND   Expr                     { If($1, $3, $1)         }  
+| Expr OR    Expr                     { If($1, $1, $3)         }
+to Expr.
+Both AND and OR use the ternary if to evaluate.

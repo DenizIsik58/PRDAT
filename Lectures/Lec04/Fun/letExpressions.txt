@@ -16,5 +16,10 @@
 
 
 
+Multiple parameters:
+run (fromString "let add a b = a + b in add 3 4 end");;
+run (fromString "let mul a b = a * b in mul 3 4 end");;
+run (fromString "let mulrec a b = if a = 1 then b else b + (mulrec (a - 1) b) in mulrec 2 3 end");;
+run (fromString "let count n a = if n = 1 then 1 else a + (count (n - 1) a) in count 100 100 end");;
 
-run (fromString "let pow b n = if n = 1 then b else b * (pow b (n - 1)) in pow 2 3");;
+run (fromString "let pow b n = if n = 0 then 1 else b * (pow b (n - 1)) in pow 10 3 end");; = 1000
