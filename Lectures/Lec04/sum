@@ -1,0 +1,1 @@
+fromString "let sum n = n in if n = 1 then 1 else n + sum (n - 1)";;

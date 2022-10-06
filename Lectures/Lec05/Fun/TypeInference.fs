@@ -52,7 +52,8 @@ type typ =
      | TypI                                (* integers                   *)
      | TypB                                (* booleans                   *)
      | TypF of typ * typ                   (* (argumenttype, resulttype) *)
-     | TypV of typevar                     (* type variable              *)
+     | TypV of typevar   
+     | TypL of typ                         (* type list                  *)
 
 and tyvarkind =  
      | NoLink of string                    (* uninstantiated type var.   *)
@@ -106,6 +107,7 @@ let rec freeTypeVars t : typevar list =
     | TypB        -> []
     | TypV tv     -> (*(printfn "%s" ("found free tyvar"));*) [tv]
     | TypF(t1,t2) -> union(freeTypeVars t1, freeTypeVars t2)
+    | TypL t      -> freeTypeVars t
 
 let occurCheck tyvar tyvars =                     
     if mem tyvar tyvars then failwith "type error: circularity" else ()
@@ -134,6 +136,7 @@ let rec typeToString t : string =
     | TypB         -> "bool"
     | TypV _       -> failwith "typeToString impossible"
     | TypF(t1, t2) -> "function"
+    | TypL t       -> sprintf "%s list" (typeToString t)
 
 (* Pretty-print type, using names 'a, 'b, ... for type variables *)
 
@@ -147,6 +150,7 @@ let rec showType t : string =
           | (NoLink name, _) -> name
           | _                -> failwith "showType impossible"
         | TypF(t1, t2) -> "(" + pr t1 + " -> " + pr t2 + ")"
+        | TypL t   -> sprintf "%s list" (pr t)
     pr t 
 
 let rec showTEnv tenv =
@@ -178,9 +182,11 @@ let rec unify t1 t2 : unit =
                                   else linkVarToType tv2 t1'
     | (TypV tv1, _       ) -> linkVarToType tv1 t2'
     | (_,        TypV tv2) -> linkVarToType tv2 t1'
+    | (TypL tl1, TypL tl2) when tl1 = tl2 -> ()
     | (TypI,     t) -> failwith ("type error: int and " + typeToString t)
     | (TypB,     t) -> failwith ("type error: bool and " + typeToString t)
     | (TypF _,   t) -> failwith ("type error: function and " + typeToString t)
+    | (TypL tl1, t2) -> failwith ("type error: " + typeToString tl1 + "list and " + typeToString t2)
 
 (* Generate fresh type variables *)
 
@@ -223,6 +229,7 @@ let rec copyType subst t : typ =
     | TypF(t1,t2) -> TypF(copyType subst t1, copyType subst t2)
     | TypI        -> TypI
     | TypB        -> TypB
+    | TypL tl     -> TypL (copyType subst tl)
 
 (* Create a type from a type scheme (tvs, t) by instantiating all the
    type scheme's parameters tvs with fresh type variables *)
