@@ -5,4 +5,17 @@ Line 2-10:
 
 Merge.java file
 
-5.7
+5.7:
+
+
+in folder Lecture/Lec04/TypedFun
+
+Line 40: Added TypL
+Line 54: Added ListExpr (tyexpr list * typ)
+Line 61: Added TypeList (value list)
+Line 146: Check if typing is correct
+
+Test examples: 
+open TypedFun;;
+typ (ListExpr ([CstB false; CstI 3; CstB true], TypI)) [];; -> returns failwith "Wrong typing"
+typ (ListExpr ([CstI 2; CstI 3; CstI 4], TypI)) [];; -> returns val it : typ = TypL TypI

@@ -37,6 +37,7 @@ type typ =
   | TypI                                (* int                         *)
   | TypB                                (* bool                        *)
   | TypF of typ * typ                   (* (argumenttype, resulttype)  *)
+  | TypL of typ                         (* list of typ                 *)
 
 (* New abstract syntax with explicit types, instead of Absyn.expr: *)
 
@@ -50,12 +51,14 @@ type tyexpr =
   | Letfun of string * string * typ * tyexpr * typ * tyexpr
           (* (f,       x,       xTyp, fBody,  rTyp, letBody *)
   | Call of tyexpr * tyexpr
+  | ListExpr of tyexpr list * typ
 
 (* A runtime value is an integer or a function closure *)
 
 type value = 
   | Int of int
   | Closure of string * string * tyexpr * value env       (* (f, x, fBody, fDeclEnv) *)
+  | ListValue of value list
 
 let rec eval (e : tyexpr) (env : value env) : int =
     match e with
@@ -63,7 +66,7 @@ let rec eval (e : tyexpr) (env : value env) : int =
     | CstB b -> if b then 1 else 0
     | Var x  ->
       match lookup env x with
-      | Int i -> i 
+      | Int i -> i
       | _     -> failwith "eval Var"
     | Prim(ope, e1, e2) -> 
       let i1 = eval e1 env
@@ -94,6 +97,7 @@ let rec eval (e : tyexpr) (env : value env) : int =
         eval fBody fBodyEnv
       | _ -> failwith "eval Call: not a function"
     | Call _ -> failwith "illegal function in Call"
+    //| ListExpr(lst, typ) -> List.map (fun e -> eval e env) lst
 
 (* Type checking for the first-order functional language: *)
 
@@ -138,6 +142,8 @@ let rec typ (e : tyexpr) (env : typ env) : typ =
         else failwith "Call: wrong argument type"
       | _ -> failwith "Call: unknown function"
     | Call(_, eArg) -> failwith "Call: illegal function in call"
+    | ListExpr(lst, t) -> 
+      if (List.fold (fun acc e -> if (typ e env) <> t then 1 else acc) 0 lst) = 0 then TypL t else failwith "Wrong typing"
 
 let typeCheck e = typ e [];;
 
