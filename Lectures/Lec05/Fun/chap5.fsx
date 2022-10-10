@@ -1,13 +1,11 @@
 (*5.1*)
-let merge xs ys = 
-  let rec aux xs ys acc =
-    match xs, ys with
-    | [],[] -> acc
-    | [], ys -> ys @ acc
-    | xs, [] -> xs @ acc
-    | x :: xs', y :: ys' when y < x -> aux (x::xs') ys' (y :: acc)
-    | x :: xs', y :: ys' -> aux xs' (y::ys') (x :: acc)
-  aux xs ys [] |> List.rev
+let rec merge (lst1, lst2) =
+    match lst1,lst2 with
+    | [], [] -> []
+    | [], y :: ys -> y :: ys
+    | x :: xs, [] -> x :: xs
+    | x::xs, y::ys when y < x -> y :: merge ((x::xs), ys)
+    | x::xs, y::ys -> x :: merge (xs, (y::ys))
 
 
 (* Higher-order functions and anonymous functions in F# *)

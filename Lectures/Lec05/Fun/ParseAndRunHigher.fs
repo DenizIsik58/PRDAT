@@ -59,3 +59,32 @@ let ex9 =
        in let mul3 x = 3 * x 
        in let twototen = (rep 10) mul3 
        in twototen 7 end end end";;
+
+let ex10 =
+    Parse.fromString
+    @"let add x = let f y = x+y in f end
+    in add 2 5 end";;
+
+let ex11 =
+    Parse.fromString
+    @"let add x = let f y = x+y in f end
+    in let addtwo = add 2
+        in addtwo 5 end
+    end"
+
+let ex12 =
+    Parse.fromString
+    @"let add x = let f y = x+y in f end
+    in let addtwo = add 2
+        in let x = 77 in addtwo 5 end
+        end
+    end"
+
+// x = 77 is never used
+
+let ex13 =
+    Parse.fromString
+    @"let add x = let f y = x+y in f end
+    in add 2 end"
+
+// add only receives one argument so it returns a closure/function

@@ -58,7 +58,6 @@ type tyexpr =
 type value = 
   | Int of int
   | Closure of string * string * tyexpr * value env       (* (f, x, fBody, fDeclEnv) *)
-  | ListValue of value list
 
 let rec eval (e : tyexpr) (env : value env) : int =
     match e with
@@ -97,7 +96,6 @@ let rec eval (e : tyexpr) (env : value env) : int =
         eval fBody fBodyEnv
       | _ -> failwith "eval Call: not a function"
     | Call _ -> failwith "illegal function in Call"
-    //| ListExpr(lst, typ) -> List.map (fun e -> eval e env) lst
 
 (* Type checking for the first-order functional language: *)
 
@@ -142,8 +140,7 @@ let rec typ (e : tyexpr) (env : typ env) : typ =
         else failwith "Call: wrong argument type"
       | _ -> failwith "Call: unknown function"
     | Call(_, eArg) -> failwith "Call: illegal function in call"
-    | ListExpr(lst, t) -> 
-      if (List.fold (fun acc e -> if (typ e env) <> t then 1 else acc) 0 lst) = 0 then TypL t else failwith "Wrong typing"
+    | ListExpr(lst, t) -> if (List.forall(fun x -> typ x env = t) lst) then t else failwith "Wrong typing"
 
 let typeCheck e = typ e [];;
 

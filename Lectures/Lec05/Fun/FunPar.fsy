@@ -18,7 +18,8 @@
 %token PIL FUN
 %token EOF
 
-%left ELSE              /* lowest precedence  */
+%left ELSE
+%right PIL              /* lowest precedence  */
 %left EQ NE 
 %left GT LT GE LE
 %left PLUS MINUS

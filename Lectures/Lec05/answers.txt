@@ -1,21 +1,57 @@
 PLC:
 
-5.1 - chap5.fsx file:
-Line 2-10:
+5.1:
+
+chap5.fsx file Line 2-8
 
 Merge.java file
 
-5.7:
 
+5.7:
 
 in folder Lecture/Lec04/TypedFun
 
 Line 40: Added TypL
 Line 54: Added ListExpr (tyexpr list * typ)
-Line 61: Added TypeList (value list)
-Line 146: Check if typing is correct
+Line 144: Added expression to check if list typing is correct
 
 Test examples: 
 open TypedFun;;
 typ (ListExpr ([CstB false; CstI 3; CstB true], TypI)) [];; -> returns failwith "Wrong typing"
 typ (ListExpr ([CstI 2; CstI 3; CstI 4], TypI)) [];; -> returns val it : typ = TypL TypI
+
+6.1:
+
+in folder Lecture/Lec05/ParseAndRunHigher
+
+Line 63-90: Added ex10,ex11,ex12,ex13 and a small explanation for ex12 & ex13
+
+6.2: 
+
+in folders 
+Lecture/Lec05/FunPar.fsy:
+
+Added expression for functions
+
+Added token "PIL" to represent a right arrow "->"
+
+Added operator precedence for "PIL"
+
+Lecture/Lec05/FunLex.fsl:
+
+Added keyword "fun" to represen a function
+
+Added token "PIL" to represent a right arrow "->" 
+
+Lecture/Lec05/HigherFun.fs:
+
+Line 33: Added Clos to represent the closure of anonymous functions
+
+Line 69-73: Added a case for Clos to the eval functional
+
+Line 74: Added a case for Fun to evaluate functions
+
+
+
+
+
