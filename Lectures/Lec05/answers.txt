@@ -64,7 +64,7 @@ FunPar.fsy: Line 43 -> added parsing of fun
 
 6.4:
 
-For the rule trees look at ex6.4.1.PNG and ex6.4.2.PNG 
+For the rule trees look at ex6.4.1.PNG and ex6.4.2.png in Lectures/Lec06/
 
 Regarding polymorphism, it is because in 6.4.1 it can take any x, but in 6.4.2 it is required to be of type int because of the comparison
 
