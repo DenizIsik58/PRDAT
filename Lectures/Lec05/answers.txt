@@ -52,6 +52,21 @@ Line 69-73: Added a case for Clos to the eval functional
 Line 74: Added a case for Fun to evaluate functions
 
 
+6.3:
+in folder Lectures/Lec05/Fun/ParseAndRunHigher.fs
+
+Added the examples from the book as ex14 and ex15.
+To test the examples please type it in the terminal like run(Parse.fromString("string"));; instead of run ex14
+
+FunLex.fsl: Line 33 -> added keyword fun
+
+FunPar.fsy: Line 43 -> added parsing of fun
+
+6.4:
+
+For the rule trees look at ex6.4.1.PNG and ex6.4.2.PNG 
+
+Regarding polymorphism, it is because in 6.4.1 it can take any x, but in 6.4.2 it is required to be of type int because of the comparison
 
 
 

@@ -84,7 +84,15 @@ let ex12 =
 
 let ex13 =
     Parse.fromString
-    @"let add x = let f y = x+y in f end
-    in add 2 end"
+    @"let add x = let f y = x+y in f end in add 2 end"
+
 
 // add only receives one argument so it returns a closure/function
+
+let ex14 = 
+    Parse.fromString
+    @"let add x = fun y -> x+y in add 2 5 end"
+
+let ex15 = 
+    Parse.fromString 
+    @"let add = fun x -> fun y -> x+y in add 2 5 end"
