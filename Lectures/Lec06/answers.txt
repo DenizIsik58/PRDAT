@@ -1,0 +1,26 @@
+everything was done inside the folder Lectures/Lec06/MicroC
+
+7.1
+We have done everything that was instructed in the exercise description
+
+7.2
+
+i) We created program arrsum.c in folder MicroC
+
+ii) We created a program squares.c in folder MicroC
+
+iii) We created a program histogram.c in folder MicroC
+
+7.3
+in CLex.fsl l.31 added keyword "FOR"
+in CPar.fsy l.17 added token "FOR". On l.103-104 Added for-loop syntax under STmtM
+
+7.4
+in Absyn.fs l.26-27 added PreInc and PreDec (given in the assignment)
+in Interp.fs l.198-206 added functionality to handle PreInc and PreDec
+
+7.5
+in CLex.fsl l.81 & l.82 added tokens "PLUSPLUS" and "MINUSMINUS" to support PreInc and PreDec
+in CPar.fsy l.17 & l.42 added keywords "PLUSPLUS" and "MINUSMINUS". On l.139-140 added syntax for expressions of type PreInc and PreDec.
+
+
