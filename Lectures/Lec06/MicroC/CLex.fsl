@@ -27,7 +27,8 @@ let keyword s =
     | "return"  -> RETURN
     | "true"    -> CSTBOOL 1
     | "void"    -> VOID 
-    | "while"   -> WHILE         
+    | "while"   -> WHILE
+    | "for"     -> FOR         
     | _         -> NAME s
  
 let cEscape s = 
@@ -77,6 +78,8 @@ rule Token = parse
   | "//"            { EndLineComment lexbuf; Token lexbuf }
   | "/*"            { Comment lexbuf; Token lexbuf }
   | '"'             { CSTSTRING (String [] lexbuf) }
+  | "++"            {PLUSPLUS}
+  | "--"            {MINUSMINUS}
   | eof             { EOF }
   | _               { failwith "Lexer error: illegal symbol" }
 

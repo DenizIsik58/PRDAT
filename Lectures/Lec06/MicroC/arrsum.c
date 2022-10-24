@@ -1,10 +1,9 @@
 //7.2 1 arrsum
 
 void arrsum(int n, int arr[], int* sump) {
-    n = n - 1;
-    while (n >= 0) {
-        *sump = *sump + arr[n];
-        n = n - 1;
+    int i;
+    for(i = n-1; i >= 0; --i) {
+        *sump = *sump + arr[i];
     }
 }
 
