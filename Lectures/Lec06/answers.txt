@@ -1,10 +1,9 @@
 everything was done inside the folder Lectures/Lec06/MicroC
 
 7.1
-We have done everything that was instructed in the exercise description
+The abstract syntax tree is located at ass 7.1 tree.png
 
 7.2
-
 i) We created program arrsum.c in folder MicroC
 
 ii) We created a program squares.c in folder MicroC
