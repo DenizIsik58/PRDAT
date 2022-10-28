@@ -1,0 +1,24 @@
+8.1:
+
+i:
+
+We ran the steps given in point B in the README file. 
+ex11.c file gave an output file of the stack machine instructions. 
+Running that file gave a huge output of the queens problem. 
+
+
+ii:
+
+ex3.out & ex5.out:
+
+LDRAGS: 
+CALL: 1 5
+STOP:
+
+
+Since the first instruction of the stack machine is 24, it requires command line args.
+The next instruction is 19 which is calling a function and requires 2 inputs (1 and 5).
+The last instruction is 25 which means STOP.
+
+
+

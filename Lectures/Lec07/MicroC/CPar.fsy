@@ -18,7 +18,7 @@ let nl = CstI 10
 %token PLUS MINUS TIMES DIV MOD
 %token EQ NE GT LT GE LE
 %token NOT SEQOR SEQAND
-%token LPAR RPAR LBRACE RBRACE LBRACK RBRACK SEMI COMMA ASSIGN AMP
+%token LPAR RPAR LBRACE RBRACE LBRACK RBRACK SEMI COMMA ASSIGN AMP INCREMENT DECREMENT
 %token EOF
 
 %right ASSIGN             /* lowest precedence */
@@ -30,6 +30,7 @@ let nl = CstI 10
 %left PLUS MINUS
 %left TIMES DIV MOD 
 %nonassoc NOT AMP 
+%nonassoc INCREMENT DECREMENT
 %nonassoc LBRACK          /* highest precedence  */
 
 %start Main
@@ -139,6 +140,8 @@ AtExprNotAccess:
     Const                               { CstI $1             }
   | LPAR ExprNotAccess RPAR             { $2                  } 
   | AMP Access                          { Addr $2             }
+  | INCREMENT Access                    { PreInc $2           }
+  | DECREMENT Access                    { PreDec $2           }
 ;
 
 Access:
