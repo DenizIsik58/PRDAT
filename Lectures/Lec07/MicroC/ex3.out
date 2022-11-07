@@ -1,1 +1,60 @@
-24 19 1 5 25 15 1 13 0 1 1 0 0 12 15 -1 16 43 13 0 1 1 11 22 15 -1 13 0 1 1 13 0 1 1 11 0 1 1 12 15 -1 15 0 13 0 1 1 11 13 0 0 1 11 7 18 18 15 -1 21 0
+24 // LDARGS: Command line arguments
+19 // CALL(1,5): We are calling the function at 5
+1 
+5 
+25 //STOP: We are halting the machine 
+15 //INCSP: We are incrementing the stack pointer with 1
+1 
+13 // GETBP: The base pointer is now on top of the stack
+0 // CSTI(1):  We are pushing the constant 1 to the stack
+1  
+1 // ADD: We are popping the two top elements(BP and 1) of the stack, adding them together and pushing the result to the stack  
+0 // CSTI(0): We are pushing the constant 0 to the stack
+0 
+12 // STI: We are storing the value v(0) at index (result from ADD) in the stack 
+15 // INCSP(-1): We are decrementing the stack pointer with 1
+-1 
+16 //GOTO(43): We jump to 43  
+43 
+13 //GETBP: We get the Base pointer 
+0 // CSTI(1): We are pushing the constant 1 to the stack 
+1 
+1 // ADD: We are popping the two top elements(BP and 1) of the stack, adding them together and pushing the result to the stack    
+11 // LDI We load the value stored at i (the result of ADD)
+22 // PRINTI: We print the value stored at i
+15 // INCSP(-1): We are decrementing the stack pointer with 1
+-1 
+13 //GETBP: We get the Base pointer 
+0 // CSTI(1): We are pushing the constant 1 to the stack 
+1 
+1 // ADD: We are popping the two top elements(BP and 1) of the stack, adding them together and pushing the result to the stack
+13 //GETBP: We get the Base pointer 
+0 // CSTI(1): We are pushing the constant 1 to the stack 
+1 
+1  // ADD: We are popping the two top elements(BP and 1) of the stack, adding them together and pushing the result to the stack  
+11 // LDI We load the value stored at i (the result of ADD)
+0 // CSTI(1): We are pushing the constant 1 to the stack 
+1 
+1 //ADD: We are popping the two top elements(Result of previous ADD and 1) of the stack, adding them together and pushing the result to the stack  
+12 // STI: We are storing the value of the previous operation at an index in the stack 
+15 // INCSP(-1): We are decrementing the stack pointer with 1
+-1 
+15 // INCSP(0): We are incrementing the stack pointer with 0
+0 
+13 //We are getting the base poitner
+0 // We are pushing a constant 1 to the stack 
+1 
+1 //ADD: We are popping the two top elements(BP and 1) of the stack, adding them together and pushing the result to the stack
+11 //LDI: We are loading the value at (result of previous operation) 
+13 //GETBP: We are getting the base pointer
+0 //CSTI 0: We are pushing 0 to the stack
+0 
+1 ADD: We are popping the two top elements(BP and 0) of the stack, adding them together and pushing the result to the stack
+11 //LDI: We are loading the value at (result of previous operation)   
+7 //LT: We are performing a less than operation on the top two stack elements, popping them, and pushing either 1 or 0. 
+18 // IFNZERO (18): Jumps to 18 if the LT operation did not return 0
+18 
+15 // INCSP: Decrements the stack pointer with 1 
+-1 
+21 // RET(0): Return 0
+0
