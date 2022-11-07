@@ -143,6 +143,16 @@ let rec cStmt stmt (varEnv : varEnv) (funEnv : funEnv) : instr list =
       [RET (snd varEnv - 1)]
     | Return (Some e) -> 
       cExpr e varEnv funEnv @ [RET (snd varEnv)]
+    | Switch(e, cases) ->
+      let m = cExpr e varEnv funEnv
+      let labend = newLabel()
+      let labels = List.fold(fun (lab, acc) (i, elem) ->
+        let newLab = newLabel()
+        (newLab, acc
+        @ [Label lab] @ m @ [CSTI i; EQ; IFZERO newLab]
+        @ cStmt elem varEnv funEnv
+        @ [GOTO labend])) (newLabel(), []) cases
+      snd labels @ [Label (fst labels); Label labend]
 
 and cStmtOrDec stmtOrDec (varEnv : varEnv) (funEnv : funEnv) : varEnv * instr list = 
     match stmtOrDec with 
@@ -207,6 +217,16 @@ and cExpr (e : expr) (varEnv : varEnv) (funEnv : funEnv) : instr list =
     | Call(f, es) -> callfun f es varEnv funEnv
     | PreInc acc ->  cAccess acc varEnv funEnv @ [DUP; LDI; CSTI 1; ADD; STI]
     | PreDec acc -> cAccess acc varEnv funEnv @ [DUP; LDI; CSTI 1; SUB; STI]
+    | Ternary(e1, e2, e3) -> 
+      let labend = newLabel()
+      let labfalse = newLabel()
+      cExpr e1 varEnv funEnv
+      @ [IFZERO labfalse]
+      @ cExpr e2 varEnv funEnv
+      @ [GOTO labend; Label labfalse;]
+      @ cExpr e3 varEnv funEnv
+      @ [Label labend]
+
 
 (* Generate code to access variable, dereference pointer or index array.
    The effect of the compiled code is to leave an lvalue on the stack.   *)
