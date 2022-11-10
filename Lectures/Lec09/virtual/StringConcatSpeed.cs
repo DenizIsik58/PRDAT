@@ -12,7 +12,7 @@ using System.Diagnostics;       // For Stopwatch
 
 public class StringConcatSpeed {
   public static void Main(String[] args) {
-    const int count = 30000;
+    const int count = 30000000;
 
     Console.WriteLine("Initialization: Building array of small strings");
 
