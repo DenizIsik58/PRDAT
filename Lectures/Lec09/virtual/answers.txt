@@ -1,0 +1,63 @@
+10.1
+
+i) 
+    ADD: Pops the two top elements of the stack, adds them and pushes the result to the stack.
+    CSTI i: Pushes a constant, i, to the stack.
+    NIL: Pushes 0 to the stack. To distinguish the difference between NIL and CSTI 0 is that CSTI 0 is being tagged. An example follows:
+
+    Tagging an int:
+    0001 << 1 | 1 = 0011
+
+    Checking for int:
+    0011 & 0001 = 0001 == 0001
+
+    This way integers will always end with bit 1. and nill will end with 0
+
+    IFZERO a: Jumps to a if v, the value at the top of the stack, is 0.
+    
+    CONS: Given v1 and v2, Creates a cons cell p -> (v1,v2) in heap and pushes its pointer, p, to the stack.
+    
+    CAR: Given a pointer p to a heap cell(v1,v2) is at the top of the stack, it pushes v1 to the stack.
+    
+    SETCAR: Given a pointer to a cell and a value, the pointers 1st component gets set to the given value, in the heap.
+
+(ii)    Describe the result of applying each C macro Length, Color and Paint
+        from Sect. 10.7.4 to a block header
+        ttttttttnnnnnnnnnnnnnnnnnnnnnngg,
+        that is, a 32-bit word, as described in the source code comments.
+
+        Length: (((hdr)>>2)&0x003FFFFF)
+        ttttttttnnnnnnnnnnnnnnnnnnnnnngg
+        1) >> 2 = 00ttttttttnnnnnnnnnnnnnnnnnnnnnn  
+        2) 0x003FFFFF = 00000000011111111111111111111
+        3) 00ttttttttnnnnnnnnnnnnnnnnnnnnnn & 0x003FFFFF = 0000000000nnnnnnnnnnnnnnnnnnnnnn
+
+        Color: ((hdr)&3)
+        ttttttttnnnnnnnnnnnnnnnnnnnnnngg
+        1) 3 = 0011
+        2) ttttttttnnnnnnnnnnnnnnnnnnnnnngg & 3 = 00000000000000000000000000000gg
+
+        Paint: (((hdr)&(~3))|(color)) - color: # 1 grey = 01
+        ttttttttnnnnnnnnnnnnnnnnnnnnnngg
+        1) ~3 = 111111111111111111111111100
+                        &
+        2)      ttttttttnnnnnnnnnnnnnnnnnnnnnngg
+
+                = ttttttttnnnnnnnnnnnnnnnnnnnnnn00
+        3)                                                      | 01
+                                                    ttttttttnnnnnnnnnnnnnnnnnnnnnn01
+
+(iii)   When does the abstract machine, or more precisely, its instruction interpretation
+        loop, call the allocate(...) function? Is there any other interaction
+        between the abstract machine (also called the mutator) and the garbage collector?
+
+        
+        The allocate function is called when the program encounters a CONS instruction.
+
+(iv)    In what situation will the garbage collector’s collect(...) function be called?
+
+        If there are no free spaces the collect(...) function is will be called.
+
+10.2
+
+

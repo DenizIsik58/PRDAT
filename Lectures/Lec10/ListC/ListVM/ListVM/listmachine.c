@@ -154,6 +154,19 @@ word* readfile(char* filename);
 
 // Heap size in words
 
+/*
+
+003FFFFF
+
+
+TTTTTTTNNNNNNNNNNNNNNNNNNNNGG
+TTTTTTTNNNNNNNNNNNNNNNNNNNNGG
+00000000011111111111111111111
+
+
+
+*/
+
 #define HEAPSIZE 1000
 
 word* heap;
@@ -256,6 +269,7 @@ void printStackAndPc(word s[], word bp, word sp, word p[], word pc) {
 }
 
 word* allocate(unsigned int tag, uword length, word s[], word sp);
+void mark(word* block);
 
 // The machine: execute the code starting at p[pc] 
 
@@ -472,11 +486,54 @@ void initheap() {
 }
 
 void markPhase(word s[], word sp) {
+
+  int i;
+  for (i = 0; i < sizeof(s); i++){
+    int block = s[i];
+    if (block != NIL) {
+      mark(&block);
+    }
+  } 
   printf("marking ...\n");
   // TODO: Actually mark something
 }
 
+void mark(word* block) {
+  int black = 2;
+  markWithColor(block, black);
+}
+
+void markWithColor(word* block, int color) {
+  int header = *block;
+  int mask = ~3;
+  int resetColor = header & mask;
+  int col = color;
+  int val = resetColor | col;
+  *block = val;
+}
+
+int isColor(word* block, int color) {
+  int blockColor = *block & 3;
+  return blockColor == color; 
+}
+
 void sweepPhase() {
+  int white = 0;
+  int black = 1;
+  int blue = 3;
+  int i = 0;
+  for (i = 0; i < sizeof(s); i++){
+    int block = s[i];
+     if (isColor(block, white)) {
+    // put on free list
+  }
+    else if (isColor(block, black)) {
+      //paint black blocks white
+      markWithColor(block,white)
+    }
+  } 
+
+ 
   printf("sweeping ...\n");
   // TODO: Actually sweep
 }
