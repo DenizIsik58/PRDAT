@@ -58,6 +58,12 @@ i)
 
         If there are no free spaces the collect(...) function is will be called.
 
-10.2
+10.2 & 10.3
+
+listmachine.c l. 489-540
+
+
+
+
 
 

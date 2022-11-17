@@ -485,64 +485,7 @@ void initheap() {
   freelist = &heap[0];
 }
 
-/*
-void markPhase(word s[], word sp) {
 
-  int i;
-  for (i = 0; i < sizeof(s); i++){
-    int block = s[i];
-    if (block != NIL) {
-      mark(&block);
-    }
-  } 
-  printf("marking ...\n");
-  // TODO: Actually mark something
-}
-
-void mark(word* block) {
-  int black = 2;
-  markWithColor(block, black);
-}
-
-void markWithColor(word* block, int color) {
-  int header = *block;
-  int mask = ~3;
-  int resetColor = header & mask;
-  int col = color;
-  int val = resetColor | col;
-  *block = val;
-}
-
-int isColor(word* block, int color) {
-  int blockColor = *block & 3;
-  return blockColor == color; 
-}
-
-void sweepPhase() {
-  int white = 0;
-  int black = 1;
-  int blue = 3;
-  int i = 0;
-  for (i = 0; i < sizeof(s); i++){
-    int block = s[i];
-     if (isColor(block, white)) {
-    // put on free list
-  }
-    else if (isColor(block, black)) {
-      //paint black blocks white
-      markWithColor(block,white)
-    }
-  } 
-
- 
-  printf("sweeping ...\n");
-  // TODO: Actually sweep
-}
-
-*/
-
-
- //#define Paint(hdr, color)  (((hdr)&(~3))|(color))
 void collect(word s[], word sp) {
   markPhase(s, sp);
   sweepPhase();
