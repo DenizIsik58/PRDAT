@@ -258,3 +258,59 @@ let ex10 = Letfun("foo", "y", CstI 3, Var "foo")    (* Function foo used as vari
 let ex11 = Prim("foo", CstI 3, CstI 4)              (* Unknown primitime *)
 let ex12 = Let("foo", CstI 3, Call("foo", CstI 4))  (* foo is not a function *)
 let ex13 = Raise (Exn "Uncaught")
+
+let rec len xs =
+match xs with
+| [] -> 0
+| x::xr -> 1 + len xr;;
+
+
+let rec lenc xs c =
+  match xs with
+  | [] -> c 0
+  | x::xr ->  lenc xr (fun r -> c(r + 1));;
+
+let lenc2 xs =
+  let rec aux cont lst' =
+    match lst' with
+    | [] -> cont 0
+    | x :: xr -> aux(fun result -> cont(result + 1)) xr
+  aux id xs;;
+
+let rec leni xs acc =
+    match xs with
+    | [] -> acc
+    | x::xr -> leni xr (acc + 1);;
+
+let rec rev xs = 
+  match xs with 
+  |[] ->[]
+  | x::xr -> rev xr @ [x];;
+
+let rec revc xs c =
+  match xs with
+  | [] -> c [] 
+  | x::xr -> revc xr (fun r -> c(r @ [x]));;
+
+let rec revi xs acc =
+  match xs with
+  | [] -> acc
+  | x::xs' -> revi xs' (x::acc);;
+
+let rec prod xs =
+  match xs with
+  |[] ->1
+  | x :: xr when x = 0 -> 0
+  | x::xr -> x * prod xr;;
+
+let rec prodc xs c =
+  match xs with
+  | [] -> c 1
+  | x :: xr when x = 0 -> 0
+  | x :: xr -> prodc xr (fun r -> c (r * x));;
+
+let rec prodi xs acc =
+  match xs with
+  | [] -> acc
+  | x :: xr when x = 0 -> 0
+  | x :: xs' -> prodi xs' (acc * x);;
