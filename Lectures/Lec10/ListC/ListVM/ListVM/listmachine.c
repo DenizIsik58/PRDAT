@@ -485,6 +485,7 @@ void initheap() {
   freelist = &heap[0];
 }
 
+/*
 void markPhase(word s[], word sp) {
 
   int i;
@@ -538,12 +539,64 @@ void sweepPhase() {
   // TODO: Actually sweep
 }
 
+*/
+
+
+ //#define Paint(hdr, color)  (((hdr)&(~3))|(color))
 void collect(word s[], word sp) {
   markPhase(s, sp);
-  heapStatistics();
   sweepPhase();
-  heapStatistics();
 }
+
+void mark(word* block) {
+  //Paint white blocks black to mark them.
+  if(Color(block[0] == White)) {
+      block[0] = Paint(block[0], Black);
+      for(int i = 1; i<=Length(block[0]); i++){
+        word w = block[i];
+        //If it is a pointer
+        if(!IsInt(w)){
+          mark(w);
+        }
+      }
+  }
+}
+
+void markPhase(word s[], word sp){
+  for(int i = 0; i<sp; i++){
+    //If it is a pointer
+    if(!IsInt(s[i])){
+     mark(s[i]);
+    }
+  }
+}
+
+void sweepPhase(){
+  word* ptr = heap;
+  while(ptr < afterHeap){
+    word* curHd = ptr[0];
+    word* next = ptr + Length(curHd) + 1;
+    //Paint black blocks white, as per assignment description
+    if(Color(curHd) == Black){
+      curHd = Paint(curHd,White)
+    }
+    //Check if current block is white
+    else if(Color(curHd) == White){
+      //Check if next block is also white
+      if (Color(next[0])) == White{
+        //Merge adjacent dead blocks into a single dead block as per 10.3
+        mkheader(0, Length(curHd) + Length(next[0]) + 1, Blue);
+      }
+      //If next block not white, just paint current block blue
+      else{
+      curHd = Paint(curHd, Blue);
+      }
+    }
+    ptr = next;
+  }
+}
+
+
 
 word* allocate(unsigned int tag, uword length, word s[], word sp) {
   int attempt = 1;
