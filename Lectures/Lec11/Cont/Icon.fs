@@ -31,6 +31,7 @@ type expr =
   | Write of expr
   | If of expr * expr * expr
   | Prim of string * expr * expr 
+  | Prim1 of string * expr
   | And of expr * expr
   | Or  of expr * expr
   | Seq of expr * expr
@@ -88,6 +89,19 @@ let rec eval (e : expr) (cont : cont) (econt : econt) =
               | _ -> Str "unknown prim2")
               econt1)
           econt
+    | Prim1 (ope: string, e1: expr) ->
+      eval e1 (fun v1 -> fun econt1 ->
+        match (ope, v1) with
+        | ("sqr", Int i) ->
+          cont(Int (i * i)) econt1
+        | ("even", Int i) ->
+          if i % 2 = 0 then cont(Int(i)) econt1 else econt1()
+        | ("multiples", Int i) ->
+          let rec loop x = cont (Int (i * x)) (fun () -> loop (x + 1))
+          loop 1
+        | _ -> Str("unknown prim1")
+      ) econt
+
     | And(e1, e2) -> 
       eval e1 (fun _ -> fun econt1 -> eval e2 cont econt1) econt
     | Or(e1, e2) -> 
@@ -138,7 +152,17 @@ let ex8 = Write(Prim("<", CstI 4, FromTo(1, 10)));
 // every(write(4 < (1 to 10)))
 let ex9 = Every(Write(Prim("<", CstI 4, FromTo(1, 10))));
 
+
+
 let ex118i = Every(Write(Prim("+", CstI 1, Prim("*", CstI 2, FromTo(1, 4)))))
 
 let ex118ii = And(Every(Write(FromTo(21,22))), And(Every(Write(FromTo(31,32))), Every(Write(FromTo(41,42)))));;
+
+let ex3 = Write(Prim("<", CstI 50, Prim("*", CstI 7, (FromTo(1,10)))));
+
+let test5 = Every(Write(Prim1("even", FromTo(1, 100))))
+
+let test6 = Every(Write(Prim1("sqr", FromTo(1,20))))
+
+let test7 = Every(Write(Prim1("multiples", CstI 2)))
 

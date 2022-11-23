@@ -41,6 +41,10 @@ Contfun.fs l.312-316
 
 11.8
 
-i)
+i) Icon.fs l.157-159
+
+ii) Icon.fs l.161
+
+iii & iv) Icon.fs l.34, Icon.fs l.92-104
 
 
