@@ -102,8 +102,27 @@ let rec addCST i C =
     | (_, IFZERO lab :: C1) -> C1
     | (0, IFNZRO lab :: C1) -> C1
     | (_, IFNZRO lab :: C1) -> addGOTO lab C1
+    | (0, CstI(x) :: CstI(y) :: LE :: C1) -> 
+      (if (x <= y) then CstI 1 else CstI 0) :: C1
+    | (0, CstI(x) :: CstI(y) :: GE :: C1) -> 
+      (if (x >= y) then CstI 1 else CstI 0) :: C1
+    | (0, CstI(x) :: CstI(y) :: LT :: C1) -> 
+      (if (x < y) then CstI 1 else CstI 0) :: C1
+    | (0, CstI(x) :: CstI(y) :: GT :: C1) -> 
+      (if (x > y) then CstI 1 else CstI 0) :: C1
+    | (0, CstI(x) :: CstI(y) :: NE :: C1) -> 
+      (if (x != y) then CstI 1 else CstI 0) :: C1
     | _                     -> CSTI i :: C
-            
+
+
+let rec addIFZERO lab3 C = 
+  printfn "%A" C
+  match C with
+  | (GOTO label  :: C1) -> IFNZRO label :: C1 
+  
+  | _ -> IFZERO lab3 :: C
+
+  
 (* ------------------------------------------------------------------- *)
 
 (* Simple environment operations *)
@@ -187,9 +206,9 @@ let rec cStmt stmt (varEnv : varEnv) (funEnv : funEnv) (C : instr list) : instr 
     match stmt with
     | If(e, stmt1, stmt2) -> 
       let (jumpend, C1) = makeJump C
-      let (labelse, C2) = addLabel (cStmt stmt2 varEnv funEnv C1)
-      cExpr e varEnv funEnv (IFZERO labelse 
-       :: cStmt stmt1 varEnv funEnv (addJump jumpend C2))
+      let (labelse, C2) = addLabel (cStmt stmt2 varEnv funEnv C1) 
+      cExpr e varEnv funEnv (addIFZERO labelse ( cStmt stmt1 varEnv funEnv (addJump jumpend C2)))
+      //cExpr e varEnv funEnv (IFZERO labelse :: cStmt stmt1 varEnv funEnv (addJump jumpend C2))
     | While(e, body) ->
       let labbegin = newLabel()
       let (jumptest, C1) = 
@@ -367,3 +386,5 @@ let contCompileToFile program fname =
     intsToFile bytecode fname; instrs
 
 (* Example programs are found in the files ex1.c, ex2.c, etc *)
+
+

@@ -12,8 +12,7 @@ A. Generating and compiling the lexer and parser for micro-C, and
 
    fslex --unicode CLex.fsl
    fsyacc --module CPar CPar.fsy
-   fsharpi -r FsLexYacc.Runtime.dll Absyn.fs CPar.fs CLex.fs Parse.fs Interp.fs ParseAndRun.fs
-
+   fsharpi -r FsLexYacc.Runtime.dll Absyn.fs CPar.fs CLex.fs Parse.fs Interp.fs ParseAn
    open ParseAndRun;;
    fromFile "ex1.c";;
    run (fromFile "ex1.c") [17];;
@@ -41,7 +40,7 @@ C. To compile and use the backwards (continuation-based) micro-C compiler:
    fsharpi -r FsLexYacc.Runtime.dll Absyn.fs CPar.fs CLex.fs Parse.fs Machine.fs Contcomp.fs ParseAndContcomp.fs   
 
    open ParseAndContcomp;;
-   contCompileToFile (fromFile "ex11.c") "ex11.out";;
+   contCompileToFile (fromFile "ex16test.c") "ex16test.out";;
    #q;;
 
    javac Machine.java
