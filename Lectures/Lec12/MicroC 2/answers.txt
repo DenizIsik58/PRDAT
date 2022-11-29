@@ -1,0 +1,51 @@
+
+ 12.1:
+
+ auxillary function defined in Contcomp.fs l. 120-125.
+
+ IFZERO has been replaced with addIFZERO in all appropriate instances.
+
+12.2: 
+
+addCST extended in Contcomp.fs with l.105-116
+
+
+12.3:
+
+Absyn.fs has been extended with syntax for Cond on l.26
+
+CLex.fsl has been extended with '?' and ':' on l.77 and 78. 
+
+CLex.fsy has been extended to support the tokens QMARK and COLON on l.21. Precendence for the new operators has been implemented on l.24.
+
+The conditional expression has been added on l.136
+
+cexpr in Contcomp.fs has been extended to support Cond (l.324-332)
+
+12.4
+The expressions in CPar.fsy have been updated to run with Cond.
+
+It has been tested with ex13.c
+
+this is how it compiles with Andalso and ORelse 
+  [LDARGS; CALL (1, "L1"); STOP; Label "L1"; INCSP 1; GETBP; CSTI 1; ADD;
+   CSTI 1889; STI; INCSP -1; GOTO "L3"; Label "L2"; GETBP; CSTI 1; ADD; GETBP;
+   CSTI 1; ADD; LDI; CSTI 1; ADD; STI; INCSP -1; GETBP; CSTI 1; ADD; LDI;
+   CSTI 4; MOD; IFNZRO "L3"; GETBP; CSTI 1; ADD; LDI; CSTI 100; MOD;
+   IFNZRO "L4"; GETBP; CSTI 1; ADD; LDI; CSTI 400; MOD; IFNZRO "L3";
+   Label "L4"; GETBP; CSTI 1; ADD; LDI; PRINTI; INCSP -1; Label "L3"; GETBP;
+   CSTI 1; ADD; LDI; GETBP; LDI; LT; IFNZRO "L2"; RET 1]
+
+this is how it compiles with Cond
+  [LDARGS; CALL (1, "L1"); STOP; Label "L1"; INCSP 1; GETBP; CSTI 1; ADD;
+   CSTI 1889; STI; INCSP -1; GOTO "L3"; Label "L2"; GETBP; CSTI 1; ADD; GETBP;
+   CSTI 1; ADD; LDI; CSTI 1; ADD; STI; INCSP -1; GETBP; CSTI 1; ADD; LDI;
+   CSTI 4; MOD; IFNZRO "L4"; GETBP; CSTI 1; ADD; LDI; CSTI 100; MOD;
+   IFZERO "L6"; CSTI 1; GOTO "L7"; Label "L6"; GETBP; CSTI 1; ADD; LDI;
+   CSTI 400; MOD; NOT; Label "L7"; GOTO "L5"; Label "L4"; CSTI 0; Label "L5";
+   IFZERO "L3"; GETBP; CSTI 1; ADD; LDI; PRINTI; INCSP -1; Label "L3"; GETBP;
+   CSTI 1; ADD; LDI; GETBP; LDI; LT; IFNZRO "L2"; RET 1]
+
+The bytecode instructions look very similar to be honest. It does not seem like we have optimized a lot.
+
+
